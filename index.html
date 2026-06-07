@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Baby Shower · Samuel Hernández Nava</title>
+<title>Baby Shower · Eithan Samuel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@
   .floating-element {
     position: absolute;
     font-size: 1.6rem;
-    opacity: 0.25;
+    opacity: 0.15;
     will-change: transform;
   }
 
@@ -95,8 +95,8 @@
   }
 
   .sobre {
-    width: 200px;
-    height: 140px;
+    width: 220px;
+    height: 150px;
     background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
     border-radius: 12px;
     position: relative;
@@ -113,9 +113,9 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 75px;
+    height: 80px;
     background: var(--blue-deep);
-    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    clip-path: polygon(0 0, 50% 65%, 100% 0);
     border-radius: 12px 12px 0 0;
     filter: drop-shadow(0 3px 4px rgba(0,0,0,0.12));
     z-index: 3;
@@ -124,27 +124,33 @@
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    height: 75px;
+    height: 80px;
     background: #739bb9;
-    clip-path: polygon(0 100%, 50% 40%, 100% 100%);
+    clip-path: polygon(0 100%, 50% 45%, 100% 100%);
     border-radius: 0 0 12px 12px;
     z-index: 2;
   }
 
+  /* Mini miniatura interna del oso real dentro del sello */
   .sello {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%) translateZ(20px);
     z-index: 4;
-    width: 52px; height: 52px;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+    width: 55px; height: 55px;
+    background: var(--white);
     border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border: 2px solid var(--gold);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    box-shadow: 0 8px 20px rgba(201,168,76,0.6),
-                inset 0 1px 1px rgba(255,255,255,0.6);
+  }
+  .sello img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   /* ── REPRODUCTOR DE AUDIO FLOTANTE ── */
@@ -167,7 +173,6 @@
     color: var(--blue-dark);
     transition: transform 0.2s;
   }
-  .music-widget:active { transform: scale(0.92); }
   
   .pulse-ring {
     position: absolute;
@@ -205,12 +210,12 @@
 
   .portada-sub {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-style: italic;
+    font-size: 1.6rem;
     font-weight: 400;
     color: var(--gold);
     margin-bottom: 2.5rem;
     text-align: center;
+    letter-spacing: 1px;
   }
 
   .btn-abrir {
@@ -251,14 +256,30 @@
     transition: transform 0.1s ease, box-shadow 0.3s ease;
   }
 
-  .divider-oso { text-align: center; font-size: 1.8rem; margin-bottom: 1.5rem; }
+  /* Imagen del Oso Grande con Caja de Regalo al inicio de la carta */
+  .main-bear-container {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    background: transparent;
+  }
+  .main-bear-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    mix-blend-mode: multiply;
+    filter: contrast(1.05) brightness(1.02);
+  }
+
   .tag-beary { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-style: italic; color: var(--blue-dark); text-align: center; line-height: 1.2; }
   .tag-beary em { color: var(--gold); font-style: normal; }
   .linea-gold { width: 50px; height: 1.5px; background: var(--gold); margin: 1.5rem auto; }
   .mensaje-texto { font-size: 0.95rem; font-weight: 300; color: var(--charcoal); text-align: center; line-height: 1.8; }
-  .nombre-bebe { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--blue-dark); text-align: center; margin: 2rem 0; }
+  .nombre-bebe { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 600; color: var(--blue-dark); text-align: center; margin: 2rem 0; letter-spacing: 0.5px; }
 
-  /* ── TRATAMIENTO DE IMÁGENES INTEGRADAS (EFECTO FUSIONADO PNG/MOCKUP) ── */
+  /* ── TRATAMIENTO DE IMÁGENES INTEGRADAS (RECORTE MULTIPLY) ── */
   .polaroid-row { display: flex; gap: 16px; justify-content: center; margin-top: 1.5rem; }
   
   .polaroid {
@@ -284,7 +305,6 @@
     position: relative;
   }
   
-  /* Uso de mezcla de capas para mimetizar el oso y los globos directamente con la tarjeta */
   .polaroid-img img { 
     width: 100%; 
     height: 100%; 
@@ -372,16 +392,15 @@
   }
   .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(37,211,102,0.5); }
 
-  /* Transiciones Globales al deslizar */
   .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
-<!-- AUDIO INTERACTIVO -->
+<!-- AUDIO INTERACTIVO (Ruta corregida sin caracteres especiales) -->
 <audio id="bgMusic" loop preload="auto">
-  <source src="cancion.mp3" type="audio/mp3">
+  <source src="musica.mp3" type="audio/mp3">
 </audio>
 
 <!-- CONTROL REPRODUCTOR FLOTANTE -->
@@ -405,22 +424,30 @@
 
   <div class="sobre-wrapper" onclick="abrirInvitacion()" title="Abrir invitación">
     <div class="sobre">
-      <div class="sello">🐻</div>
+      <!-- Sello con la imagen real del oso en la caja -->
+      <div class="sello">
+        <img src="fe9733ba-eac9-4b85-ade6-eb123a87e0b9.jpeg" alt="Sello Oso">
+      </div>
     </div>
   </div>
 
   <h1 class="portada-title">Baby<br>Shower</h1>
-  <p class="portada-sub">Samuel Hernández Nava</p>
+  <p class="portada-sub">Eithan Samuel</p>
 
   <button class="btn-abrir" onclick="abrirInvitacion()">
     ✦ Ver invitación
   </button>
 </section>
 
-<!-- ══════════ MENSAJE CON RECORTE MULTIPLY ── -->
+<!-- ══════════ CARTA / MENSAJE ══════════ -->
 <section id="mensaje" class="seccion">
   <div class="card-3d fade-in dynamic-tilt">
-    <div class="divider-oso">🐾</div>
+    
+    <!-- Oso grande real con caja de regalo y lazo al inicio de la carta -->
+    <div class="main-bear-container">
+      <img src="fe9733ba-eac9-4b85-ade6-eb123a87e0b9.jpeg" alt="Oso Real Grande en Caja de Regalo">
+    </div>
+
     <p class="tag-beary">We can <em>BEARLY</em><br>wait to meet him</p>
     <div class="linea-gold"></div>
     <p class="mensaje-texto">
@@ -429,9 +456,9 @@
       Nos llena el corazón invitarte a darle<br>
       la bienvenida a nuestro querido:
     </p>
-    <p class="nombre-bebe">Samuel Hernández Nava</p>
+    <p class="nombre-bebe">Eithan Samuel</p>
 
-    <!-- Integración directa de los archivos pasados con fusión de capas transparente -->
+    <!-- Fotos inferiores con extensiones corregidas (.jpeg) -->
     <div class="polaroid-row">
       <div class="polaroid">
         <div class="polaroid-img">
@@ -514,11 +541,13 @@
 <!-- ══════════ CONFIRMACIÓN ══════════ -->
 <section id="confirmacion" class="seccion">
   <div class="card-3d fade-in dynamic-tilt">
-    <span style="font-size: 3.5rem; display:block; margin-bottom:1rem;">🐻</span>
+    <div style="width:70px; margin:0 auto 1rem; mix-blend-mode:multiply;">
+       <img src="fe9733ba-eac9-4b85-ade6-eb123a87e0b9.jpeg" style="width:100%; height:auto;" alt="Oso Cierre">
+    </div>
     <h2 class="detalles-title">¡Te esperamos con todo el amor!</h2>
     <p style="font-size:0.9rem; color:var(--muted); margin-bottom:2rem;">Por favor confirma tu asistencia antes del 12 de julio para reservar tu lugar 🩵</p>
     
-    <a class="btn-whatsapp" href="https://wa.me/18155147845?text=¡Hola!%20Confirmo%20mi%20asistencia%20al%20Baby%20Shower%20de%20Samuel." target="_blank">
+    <a class="btn-whatsapp" href="https://wa.me/18155147845?text=¡Hola!%20Confirmo%20mi%20asistencia%20al%20Baby%20Shower%20de%20Eithan%20Samuel." target="_blank">
       Confirmar a mamá
     </a>
   </div>
@@ -528,28 +557,4 @@
 const audio = document.getElementById('bgMusic');
 const widget = document.getElementById('musicWidget');
 const ring = document.getElementById('ringAnim');
-const icon = document.getElementById('musicIcon');
-
-function abrirInvitacion() {
-  document.getElementById('mensaje').scrollIntoView({ behavior: 'smooth' });
-  widget.style.display = 'flex';
-  audio.play().then(() => {
-    ring.style.animation = 'puff 2s infinite';
-  }).catch(err => console.log("Interacción requerida para el inicio del audio"));
-}
-
-function toggleMusica() {
-  if (audio.paused) {
-    audio.play();
-    icon.innerText = '🎵';
-    ring.style.animation = 'puff 2s infinite';
-  } else {
-    audio.pause();
-    icon.innerText = '🔇';
-    ring.style.animation = 'none';
-  }
-}
-
-// ── MOVIMIENTO PARALAJE EN SCROLL (ELEMENTOS FLOTANTES) ──
-window.addEventListener('scroll', () => {
-  const scrolled = window.pageYOffs
+const icon = document.getElementById('mus
