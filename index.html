@@ -1,387 +1,1076 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baby Shower - Samuel</title>
-  <style>
-    /* ESTILOS GENERALES Y FUENTES */
-    @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Baby Shower · Samuel Hernández Nava</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  :root {
+    --cream: #FDFBF7;
+    --cream-2: #F5EFE6;
+    --sand: #E8DDD0;
+    --dust: #C9B99E;
+    --blue: #A8C3D8;
+    --blue-deep: #7BA3BF;
+    --blue-dark: #4A7A9B;
+    --gold: #C9A84C;
+    --gold-light: #E8CC80;
+    --charcoal: #2C3E50;
+    --muted: #7A8A95;
+    --white: #ffffff;
+  }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: #f4ece1; /* Fondo beige suave y limpio como el video */
-      color: #5a4a42;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+  html { scroll-behavior: smooth; }
 
-    /* CONTENEDOR MÓVIL ESTILO APP */
-    .phone-container {
-      width: 100%;
-      max-width: 450px;
-      background: #fdfaf6;
-      min-height: 100vh;
-      box-shadow: 0 0 20px rgba(0,0,0,0.05);
-      position: relative;
-      padding: 40px 20px;
-      text-align: center;
-    }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    /* ELEMENTOS DE FONDO COLOQUIAIS */
-    .bg-elements {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 1;
-    }
-    .cloud {
-      position: absolute;
-      opacity: 0.3;
-    }
+  /* ── INTERFAZ DE INTRODUCCIÓN (CORRECCIÓN DE FLUJO DE AUDIO) ── */
+  #intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+    padding: 2rem;
+  }
 
-    /* HEADER */
-    header {
-      position: relative;
-      z-index: 2;
-      margin-top: 20px;
-    }
-    h1 {
-      font-family: 'Alex Brush', cursive;
-      font-size: 3.5rem;
-      color: #b59975;
-      margin-bottom: 10px;
-    }
-    .subtitle {
-      font-size: 0.9rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-weight: 300;
-    }
+  #intro-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+  }
 
-    /* SECCIÓN DEL SOBRE INTERACTIVO */
-    .envelope-section {
-      margin: 40px auto;
-      position: relative;
-      z-index: 2;
-      cursor: pointer;
-    }
-    .envelope-img {
-      width: 180px;
-      transition: transform 0.3s ease;
-    }
-    .envelope-img:hover {
-      transform: scale(1.05);
-    }
-    .click-hint {
-      font-size: 0.75rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #a39281;
-      margin-top: 10px;
-      animation: pulse 1.5s infinite;
-    }
+  /* Ocultar contenido base antes de activar la invitación */
+  .app-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+  }
 
-    /* CONTENIDO OCULTO QUE APARECE AL DAR CLICK */
-    .main-content {
-      display: none;
-      position: relative;
-      z-index: 2;
-      animation: fadeIn 1s ease forwards;
-    }
+  .app-content.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    /* SECCIÓN FOTOS (POLAROID) */
-    .photos-container {
-      margin: 30px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: center;
-    }
-    .polaroid {
-      background: white;
-      padding: 12px 12px 25px 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-      border-radius: 2px;
-      width: 85%;
-      transform: rotate(-2deg);
-      transition: transform 0.3s;
-    }
-    .polaroid:nth-child(even) {
-      transform: rotate(2deg);
-    }
-    .polaroid-img-box {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: #e6e1da; /* Marcador de posición gris neutro */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-    .polaroid-img-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .polaroid p {
-      font-family: 'Alex Brush', cursive;
-      font-size: 1.8rem;
-      color: #7a6b58;
-      margin-top: 12px;
-    }
+  /* ── PORTADA ── */
+  #portada {
+    min-height: 100vh;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 1.5rem;
+  }
 
-    /* CONTADOR REGRESIVO */
-    .countdown-section {
-      background: #f7f1e9;
-      padding: 20px;
-      border-radius: 15px;
-      margin: 30px 0;
-    }
-    .countdown-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
-    }
-    .timer {
-      display: flex;
-      justify-content: space-around;
-    }
-    .time-block span {
-      display: block;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #b59975;
-    }
-    .time-block label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      color: #9c8e7d;
-    }
+  .bg-circles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .bg-circles span {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .bg-circles span:nth-child(1) { width: 280px; height: 280px; background: var(--blue); top: -80px; right: -60px; }
+  .bg-circles span:nth-child(2) { width: 200px; height: 200px; background: var(--gold); bottom: 60px; left: -60px; }
+  .bg-circles span:nth-child(3) { width: 120px; height: 120px; background: var(--blue); bottom: 200px; right: 20px; opacity: 0.08; }
 
-    /* DETALLES DEL EVENTO */
-    .details-section {
-      margin: 40px 0;
-      text-align: left;
-      padding: 0 10px;
-    }
-    .detail-card {
-      margin-bottom: 25px;
-      border-left: 2px solid #b59975;
-      padding-left: 15px;
-    }
-    .detail-card h3 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 5px;
-      color: #b59975;
-    }
-    .detail-card p {
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
+  .sobre-wrapper {
+    position: relative;
+    cursor: pointer;
+    animation: float 4s ease-in-out infinite;
+    margin-bottom: 2rem;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 
-    /* BOTONES */
-    .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 30px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .btn-gold {
-      background: #b59975;
-      color: white;
-    }
-    .btn-outline {
-      border: 1px solid #b59975;
-      color: #b59975;
-      background: transparent;
-    }
+  .sobre {
+    width: 180px;
+    height: 130px;
+    background: var(--blue);
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(74,122,155,0.15);
+    transition: transform 0.3s ease;
+  }
+  .sobre:hover { transform: scale(1.04); }
 
-    /* CONTROLES DE MÚSICA */
-    .music-control {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #e6e1da;
-      padding: 10px;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      z-index: 100;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
+  .sobre::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 65px;
+    background: var(--blue-deep);
+    clip-path: polygon(0 0, 50% 55%, 100% 0);
+    border-radius: 8px 8px 0 0;
+  }
+  .sobre::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 65px;
+    background: var(--blue-deep);
+    clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+    opacity: 0.7;
+    border-radius: 0 0 8px 8px;
+  }
 
-    /* ANIMACIONES */
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.03); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.8; }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  .sello {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 44px; height: 44px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 2px 12px rgba(201,168,76,0.4);
+  }
+
+  .osito-portada {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    animation: bounce-in 0.8s cubic-bezier(0.68,-0.55,0.265,1.55) both;
+  }
+  @keyframes bounce-in {
+    from { transform: scale(0) rotate(-10deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  .portada-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .portada-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--charcoal);
+    line-height: 1.1;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .portada-sub {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .btn-abrir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: var(--charcoal);
+    color: var(--cream);
+    border: none;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-abrir:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(74,122,155,0.3);
+  }
+
+  .btn-abrir .blink {
+    display: inline-block;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .globitos {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    pointer-events: none;
+  }
+  .globo {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: rise 6s ease-in-out infinite;
+  }
+  .globo:nth-child(1) { left: 8%; animation-delay: 0s; animation-duration: 7s; }
+  .globo:nth-child(2) { right: 10%; animation-delay: 2s; animation-duration: 5s; }
+  .globo:nth-child(3) { left: 20%; animation-delay: 4s; animation-duration: 8s; top: 20px; }
+  @keyframes rise {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-18px) rotate(5deg); }
+  }
+
+  /* ── SECCIÓN MENSAJE ── */
+  .seccion {
+    padding: 4rem 2rem;
+    position: relative;
+  }
+
+  .divider-oso {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--dust);
+  }
+
+  .tag-beary {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--blue-dark);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .tag-beary em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .mensaje-texto {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .nombre-bebe {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+    text-align: center;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+  }
+
+  .polaroid-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .polaroid {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 4px;
+    padding: 10px 10px 28px;
+    box-shadow: 2px 4px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    flex: 1;
+    max-width: 140px;
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+  }
+  .polaroid:nth-child(2) { transform: rotate(2deg); }
+  .polaroid:hover { transform: rotate(0) scale(1.04); z-index: 2; }
+
+  .polaroid-img {
+    width: 100%;
+    height: 110px;
+    background: var(--cream-2);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 4px;
+    overflow: hidden;
+  }
+  .polaroid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+  .polaroid-caption {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* ── CONTADOR ── */
+  #contador {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #contador::before {
+    content: '🐻';
+    position: absolute;
+    font-size: 8rem;
+    opacity: 0.04;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .contador-label {
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 1.5rem;
+  }
+
+  .countdown-grid {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .count-block {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 16px 14px 10px;
+    min-width: 68px;
+    flex: 1;
+    max-width: 80px;
+  }
+
+  .count-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--cream);
+    display: block;
+  }
+
+  .count-unit {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-top: 4px;
+    display: block;
+  }
+
+  .btn-cal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-cal:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  /* ── DETALLES EVENTO ── */
+  #detalles {
+    padding: 3.5rem 2rem;
+    background: var(--cream);
+  }
+
+  .seccion-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .info-card {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+  }
+
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cream-2);
+  }
+  .info-row:last-child { border-bottom: none; }
+
+  .info-icon {
+    font-size: 1.2rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+
+  .info-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 2px;
+  }
+
+  .info-value {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.4;
+  }
+
+  .btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 1.5rem;
+  }
+
+  .btn-accion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+  }
+
+  .btn-mapa {
+    background: var(--blue);
+    color: var(--charcoal);
+  }
+  .btn-mapa:hover { background: var(--blue-deep); transform: translateY(-2px); }
+
+  .btn-regalos {
+    background: var(--cream-2);
+    color: var(--charcoal);
+    border: 1px solid var(--sand);
+  }
+  .btn-regalos:hover { background: var(--sand); transform: translateY(-2px); }
+
+  /* ── ITINERARIO ── */
+  #itinerario {
+    background: var(--cream-2);
+    padding: 3.5rem 2rem;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--dust) 0px,
+      var(--dust) 4px,
+      transparent 4px,
+      transparent 12px
+    );
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 0 0 1.8rem 1.2rem;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: all 0.5s ease;
+  }
+  .tl-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -1.95rem;
+    top: 4px;
+    width: 18px; height: 18px;
+    background: var(--cream);
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+  }
+
+  .tl-hora {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: var(--blue-dark);
+    margin-bottom: 2px;
+  }
+
+  .tl-evento {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--charcoal);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── CONFIRMACIÓN ── */
+  #confirmacion {
+    background: var(--white);
+    padding: 4rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .oso-grande {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .conf-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--charcoal);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .conf-sub {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 36px;
+    background: #25D366;
+    color: white;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+  }
+  .btn-whatsapp:hover {
+    background: #1ebe5a;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(37,211,102,0.4);
+  }
+
+  .wa-icon {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+  }
+
+  .footer-detalle {
+    margin-top: 2rem;
+    font-size: 0.7rem;
+    color: var(--dust);
+    letter-spacing: 0.1em;
+    font-weight: 300;
+  }
+
+  .detalles-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* Animación de entrada de secciones */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Línea decorativa */
+  .linea-gold {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0.75rem auto 1.5rem;
+  }
+
+  /* Pase personal mini */
+  .pase-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--sand);
+    border-radius: 50px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .pase-mini:hover { background: var(--cream-2); }
+
+  /* REPRODUCTOR DE AUDIO FLOTANTE MINIMALISTA */
+  .audio-player-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    cursor: pointer;
+    z-index: 1500;
+    font-size: 1.1rem;
+  }
+</style>
 </head>
 <body>
 
-  <!-- REPRODUCTOR DE AUDIO SILENCIOSO AL INICIO -->
-  <audio id="bg-music" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-  </audio>
+<!-- REPRODUCTOR SILENCIOSO INICIAL -->
+<audio id="background-track" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- CONTROL FLOTANTE MÚSICA -->
-  <div class="music-control" onclick="toggleMusic()">🎵</div>
+<!-- CONTROL REMOTO DE AUDIO -->
+<div class="audio-player-widget" onclick="toggleAudioVolume()" id="audio-control-indicator">🎵</div>
 
-  <div class="phone-container">
-    
-    <!-- HEADER PRINCIPAL -->
-    <header>
-      <h1>Baby Shower</h1>
-      <p class="subtitle">Samuel</p>
-    </header>
+<!-- ══════════ PANTALLA FILTRO DE ENTRADA (PROMPT INTEGRATION) ══════════ -->
+<div id="intro-screen">
+  <div class="osito-portada">🐻</div>
+  <h2 class="portada-title" style="font-size: 2.4rem; margin-bottom: 0.2rem;">Baby Shower</h2>
+  <p class="portada-sub" style="margin-bottom: 2.5rem;">Samuel</p>
+  <button class="btn-abrir" onclick="initializeInvitation()">
+    ✦ Abrir Invitación
+  </button>
+</div>
 
-    <!-- SOBRE VIRTUAL DE BIENVENIDA -->
-    <div class="envelope-section" id="envelope-wrapper" onclick="openInvitation()">
-      <!-- Asegúrate de subir una imagen limpia de un sobre a tu GitHub o dejar esta plantilla -->
-      <img src="https://cdn-icons-png.flaticon.com/512/709/709601.png" class="envelope-img" alt="Sobre">
-      <p class="click-hint">Click para abrir invitación</p>
+<!-- CONTENEDOR CORE DE LA APP -->
+<div class="app-content" id="app-content-root">
+
+  <!-- ══════════ PORTADA ══════════ -->
+  <section id="portada">
+    <div class="bg-circles">
+      <span></span><span></span><span></span>
     </div>
 
-    <!-- CONTENIDO QUE APARECE TRAS EL CLICK -->
-    <div class="main-content" id="main-content">
-      
-      <p style="margin: 20px 0; font-style: italic; color: #8c7b6c;">
-        "Un osito travieso está por llegar, ¡vamos a festejar!"
-      </p>
-
-      <!-- CONTENEDOR PARA LAS IMÁGENES REALES -->
-      <div class="photos-container">
-        <!-- Foto Papás -->
-        <div class="polaroid">
-          <div class="polaroid-img-box">
-            <img id="foto-papas" src="papas.jpg" alt="Los Papás" onerror="this.style.display='none'; this.parentNode.innerText='[Espacio para foto de los papás]'">
-          </div>
-          <p>Los Papás</p>
-        </div>
-
-        <!-- Foto Ecografía -->
-        <div class="polaroid">
-          <div class="polaroid-img-box">
-            <img id="foto-eco" src="ecografia.jpg" alt="Ecografía" onerror="this.style.display='none'; this.parentNode.innerText='[Espacio para la Ecografía]'">
-          </div>
-          <p>Baby Samuel</p>
-        </div>
-      </div>
-
-      <!-- CONTADOR TIEMPO REAL -->
-      <div class="countdown-section">
-        <p class="countdown-title">¿Cuánto falta?</p>
-        <div class="timer">
-          <div class="time-block"><span id="days">00</span><label>Días</label></div>
-          <div class="time-block"><span id="hours">00</span><label>Horas</label></div>
-          <div class="time-block"><span id="minutes">00</span><label>Min</label></div>
-          <div class="time-block"><span id="seconds">00</span><label>Seg</label></div>
-        </div>
-      </div>
-
-      <!-- DATOS LOGÍSTICOS EDITABLES -->
-      <div class="details-section">
-        <div class="detail-card">
-          <h3>Fecha</h3>
-          <p>Sábado, 18 de Julio de 2026</p> <!-- Edita la fecha aquí -->
-        </div>
-
-        <div class="detail-card">
-          <h3>Hora</h3>
-          <p>4:00 PM</p> <!-- Edita la hora aquí -->
-        </div>
-
-        <div class="detail-card">
-          <h3>Ubicación</h3>
-          <p>Calle 72 con Av. 15, Salón de Eventos Camelot. Maracaibo, Venezuela.</p> <!-- Edita la dirección aquí -->
-        </div>
-      </div>
-
-      <!-- BOTONES INTERACTIVOS -->
-      <a href="https://maps.google.com" target="_blank" class="btn btn-outline">📍 Ver Ubicación</a>
-      
-      <a href="https://wa.me/584120000000?text=¡Hola!%20Confirmo%20mi%20asistencia%20al%20Baby%20Shower%20de%20Samuel%20👶" target="_blank" class="btn btn-gold">📱 Confirmar Asistencia</a>
-
+    <div class="globitos">
+      <span class="globo">🎈</span>
+      <span class="globo">🩵</span>
+      <span class="globo">🎀</span>
     </div>
-  </div>
 
-  <script>
-    // CONTROL DEL SOBRE Y REPRODUCCIÓN AUTOMÁTICA COMPATIBLE CON MÓVILES
-    const music = document.getElementById('bg-music');
-    
-    function openInvitation() {
-      // Oculta el sobre y muestra la invitación
-      document.getElementById('envelope-wrapper').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
-      
-      // Intenta reproducir la música inmediatamente tras la acción del usuario
-      music.play().catch(error => console.log("El navegador bloqueó la reproducción automática física:", error));
+    <div class="portada-label">You are invited</div>
+
+    <div class="sobre-wrapper" onclick="scrollToSection('mensaje')" title="Abrir invitación">
+      <div class="sobre">
+        <div class="sello">🐻</div>
+      </div>
+    </div>
+
+    <h1 class="portada-title">Baby<br>Shower</h1>
+    <p class="portada-sub">Samuel Hernández Nava</p>
+
+    <button class="btn-abrir" onclick="scrollToSection('mensaje')">
+      <span class="blink">✦</span> Ver invitación
+    </button>
+
+    <a href="#confirmacion" class="pase-mini">Pase personal ↓</a>
+  </section>
+
+  <!-- ══════════ MENSAJE ══════════ -->
+  <section id="mensaje" class="seccion">
+    <div class="divider-oso fade-in">🐾</div>
+
+    <p class="tag-beary fade-in">We can <em>BEARLY</em><br>wait to meet him</p>
+
+    <div class="linea-gold fade-in"></div>
+
+    <p class="mensaje-texto fade-in">
+      Un osito travieso está por llegar<br>
+      ¡vamos a festejarle la llegada!<br><br>
+      Nos llena el corazón invitarte a darle<br>
+      la bienvenida a nuestro querido:
+    </p>
+
+    <p class="nombre-bebe fade-in">Samuel Hernández Nava</p>
+
+    <div class="polaroid-row fade-in">
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src="papas.jpg" alt="Los Papás" onerror="this.style.display='none'; this.parentNode.innerText='📸'">
+        </div>
+        <p class="polaroid-caption">Los papás</p>
+      </div>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src="ecografia.jpg" alt="Ecografía" onerror="this.style.display='none'; this.parentNode.innerText='🩺'">
+        </div>
+        <p class="polaroid-caption">Ecografía</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTADOR ══════════ -->
+  <section id="contador">
+    <p class="contador-label">¿Cuánto falta?</p>
+
+    <div class="countdown-grid">
+      <div class="count-block">
+        <span class="count-num" id="dias">00</span>
+        <span class="count-unit">Días</span>
+      </div>
+      <div class="count-block">
+        <span class="count-num" id="horas">00</span>
+        <span class="count-unit">Horas</span>
+      </div>
+      <div class="count-block">
+        <span class="count-num" id="minutos">00</span>
+        <span class="count-unit">Min</span>
+      </div>
+      <div class="count-block">
+        <span class="count-num" id="segundos">00</span>
+        <span class="count-unit">Seg</span>
+      </div>
+    </div>
+
+    <a class="btn-cal" onclick="descargarICS()">
+      📅 Agendar en Calendario
+    </a>
+  </section>
+
+  <!-- ══════════ DETALLES ══════════ -->
+  <section id="detalles">
+    <p class="seccion-titulo">El gran día</p>
+    <div class="linea-gold"></div>
+
+    <h2 class="detalles-title fade-in">Agenda<br>la fecha</h2>
+
+    <div class="info-card fade-in">
+      <div class="info-row">
+        <span class="info-icon">📅</span>
+        <div>
+          <p class="info-label">Fecha</p>
+          <p class="info-value">Sábado, 19 de Julio de 2025</p>
+        </div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">🕐</span>
+        <div>
+          <p class="info-label">Hora</p>
+          <p class="info-value">12:00 PM — 8:00 PM</p>
+        </div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📍</span>
+        <div>
+          <p class="info-label">Lugar</p>
+          <p class="info-value">1245 Maplewood Avenue<br>Springfield, Illinois</p>
+        </div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">👗</span>
+        <div>
+          <p class="info-label">Código de vestimenta</p>
+          <p class="info-value">Colores pastel · Casual elegante</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row fade-in">
+      <a class="btn-accion btn-mapa"
+         href="https://maps.google.com/?q=1245+Maplewood+Avenue+Springfield+Illinois"
+         target="_blank">
+        🗺️ Ver Ubicación
+      </a>
+      <a class="btn-accion btn-regalos"
+         href="#"
+         target="_blank">
+        🎁 Lista de Regalos
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════ ITINERARIO ══════════ -->
+  <section id="itinerario">
+    <p class="seccion-titulo">El programa</p>
+    <div class="linea-gold"></div>
+    <h2 class="detalles-title">Así será<br>el día</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">✨</div>
+        <p class="tl-hora">12:00 PM</p>
+        <p class="tl-evento">✨ Recepción</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🥂</div>
+        <p class="tl-hora">12:40 PM</p>
+        <p class="tl-evento">🥂 Brindis de bienvenida</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🍽️</div>
+        <p class="tl-hora">1:30 PM</p>
+        <p class="tl-evento">🍽️ Comida</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">📸</div>
+        <p class="tl-hora">3:00 PM</p>
+        <p class="tl-evento">📸 Sesión de fotos</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🧸</div>
+        <p class="tl-hora">3:30 PM</p>
+        <p class="tl-evento">🧸 Juegos y sorpresas</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🎂</div>
+        <p class="tl-hora">5:00 PM</p>
+        <p class="tl-evento">🎂 Pastel y celebración</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">👋</div>
+        <p class="tl-hora">7:30 PM</p>
+        <p class="tl-evento">👋 Despedida</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONFIRMACIÓN ══════════ -->
+  <section id="confirmacion">
+    <span class="oso-grande">🐻</span>
+
+    <h2 class="conf-titulo fade-in">¡Te esperamos<br>con todo el amor!</h2>
+
+    <div class="linea-gold"></div>
+
+    <p class="conf-sub fade-in">
+      Por favor confirma tu asistencia<br>
+      antes del 12 de julio<br>
+      para reservar tu lugar 🩵
+    </p>
+
+    <a class="btn-whatsapp"
+       href="https://wa.me/18155147845?text=¡Hola!%20Confirmo%20mi%20asistencia%20al%20Baby%20Shower%20de%20Samuel.%20Aquí%20mis%20datos%3A%20Nombre%3A%20_%20Número%20de%20personas%3A%20_"
+       target="_blank">
+      <svg class="wa-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Confirmar a mamá
+    </a>
+
+    <p class="footer-detalle">
+      🐻 Baby Shower · Samuel Hernández Nava · Julio 2025
+    </p>
+  </section>
+</div>
+
+<script>
+// ── MANEJO DEL DISPARADOR DE INTRODUCCIÓN Y PLAYBACK AUDIO ──
+const backgroundMusic = document.getElementById('background-track');
+
+function initializeInvitation() {
+  // Desvanecer la pantalla de bienvenida
+  document.getElementById('intro-screen').classList.add('fade-out');
+  
+  // Mostrar la estructura interna de la app de forma animada
+  const mainContent = document.getElementById('app-content-root');
+  mainContent.classList.add('visible');
+  
+  // Inicialización del audio mediante evento directo del usuario
+  backgroundMusic.play().catch(error => {
+    console.log("Audio retenido por restricciones del navegador:", error);
+  });
+}
+
+function toggleAudioVolume() {
+  const indicator = document.getElementById('audio-control-indicator');
+  if (backgroundMusic.paused) {
+    backgroundMusic.play();
+    indicator.innerText = "🎵";
+  } else {
+    backgroundMusic.pause();
+    indicator.innerText = "🔇";
+  }
+}
+
+// ── SCROLL SUAVE ──
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── COUNTDOWN → 19 Julio 2025 12:00 PM ──
+const TARGET = new Date('2025-07-19T12:00:00');
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = TARGET - now;
+
+  if (diff <= 0) {
+    document.getElementById('dias').textContent = '00';
+    document.getElementById('horas').textContent = '00';
+    document.getElementById('minutos').textContent = '00';
+    document.getElementById('segundos').textContent = '00';
+    return;
+  }
+
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById('dias').textContent = String(d).padStart(2, '0');
+  document.getElementById('horas').textContent = String(h).padStart(2, '0');
+  document.getElementById('minutos').textContent = String(m).padStart(2, '0');
+  document.getElementById('segundos').textContent = String(s).padStart(2, '0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── DESCARGAR ICS ──
+function descargarICS() {
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    'DTSTART:20250719T120000',
+    'DTEND:20250719T200000',
+    'SUMMARY:Baby Shower · Samuel Hernández Nava',
+    'DESCRIPTION:Baby Shower de Samuel Hernández Nava. ¡Te esperamos!',
+    'LOCATION:1245 Maplewood Avenue, Springfield, Illinois',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\n');
+
+  const blob = new Blob([ics], { type: 'text/calendar' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'baby-shower-samuel.ics';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── INTERSECTION OBSERVER para animaciones ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
     }
+  });
+}, { threshold: 0.15 });
 
-    function toggleMusic() {
-      if (music.paused) {
-        music.play();
-      } else {
-        music.pause();
-      }
-    }
-
-    // CONTADOR REGRESIVO LÓGICO
-    const targetDate = new Date('July 18, 2026 16:00:00').getTime();
-
-    setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((difference % (1000 * 60)) / 1000);
-
-        document.getElementById('days').innerText = d < 10 ? '0' + d : d;
-        document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
-        document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
-        document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
-      }
-    }, 1000);
-  </script>
+document.querySelectorAll('.fade-in, .tl-item').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
