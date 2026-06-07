@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baby Shower de Eithan Samuel</title>
-    <!-- Google Fonts -->
+    <!-- Google Fonts & FontAwesome para Iconos -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -32,7 +32,7 @@
             position: relative;
         }
 
-        /* --- FONDO DINÁMICO CON ELEMENTOS REALES --- */
+        /* --- FONDO DECORATIVO: TUS IMÁGENES COMO ELEMENTOS FLOTANTES --- */
         .background-decorations {
             position: fixed;
             top: 0;
@@ -44,69 +44,69 @@
             overflow: hidden;
         }
 
-        /* Ilustraciones de acuarela en movimiento fluido continuo */
         .asset-flotante {
             position: absolute;
             background-size: contain;
             background-repeat: no-repeat;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.05));
             will-change: transform;
+            opacity: 0.85; /* Sutil, para que no cubra ni moleste la lectura */
         }
 
-        /* 1. Oso en el Globo Aerostático */
+        /* 1. Imagen del Oso en Globo Aerostático */
         .asset-oso-globo {
-            width: 140px;
-            height: 220px;
+            width: 120px;
+            height: 180px;
             background-image: url('54c3884c-8f36-4ae3-9fe9-5ab36d1dfde5.jpeg');
             top: 15%;
-            left: -150px;
-            animation: flotarOso 45s linear infinite;
+            left: -130px;
+            animation: flotarOso 40s linear infinite;
         }
 
-        /* 2. Cesta de globos azules */
+        /* 2. Imagen de la Cesta de globos */
         .asset-cesta-globos {
-            width: 110px;
-            height: 180px;
+            width: 100px;
+            height: 160px;
             background-image: url('f60e1a0f-b686-4f51-8c9c-40ebd036ae5b.jpeg');
-            bottom: -200px;
-            right: 8%;
-            animation: subirCesta 38s linear infinite;
-            animation-delay: 5s;
+            bottom: -180px;
+            right: 10%;
+            animation: subirCesta 35s linear infinite;
+            animation-delay: 3s;
         }
 
-        /* 3. Racimo de globos transparentes acuarela */
+        /* 3. Imagen del Racimo de globos transparentes */
         .asset-racimo-azul {
-            width: 130px;
-            height: 150px;
+            width: 110px;
+            height: 140px;
             background-image: url('251e55a4-7fa4-4664-beb5-908a453da90f.jpeg');
             top: 55%;
-            left: -150px;
-            animation: flotarRacimo 32s linear infinite;
-            animation-delay: 12s;
+            left: -130px;
+            animation: flotarRacimo 30s linear infinite;
+            animation-delay: 8s;
         }
 
-        /* Animaciones fluidas que atraviesan la pantalla de forma sutil */
+        /* ANIMACIONES DE MOVIMIENTO CONTINUO Y SUAVE */
         @keyframes flotarOso {
             0% { transform: translate(0, 0) rotate(0deg); }
-            30% { transform: translate(40vw, 30px) rotate(3deg); }
-            70% { transform: translate(80vw, -20px) rotate(-3deg); }
-            100% { transform: translate(calc(100vw + 200px), 10px) rotate(0deg); }
+            30% { transform: translate(35vw, 20px) rotate(2deg); }
+            70% { transform: translate(75vw, -20px) rotate(-2deg); }
+            100% { transform: translate(calc(100vw + 150px), 10px) rotate(0deg); }
         }
 
         @keyframes subirCesta {
             0% { transform: translateY(0) scale(0.9); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-115vh) scale(1.05); opacity: 0; }
+            10% { opacity: 0.85; }
+            90% { opacity: 0.85; }
+            100% { transform: translateY(-115vh) scale(1); opacity: 0; }
         }
 
         @keyframes flotarRacimo {
             0% { transform: translate(0, 0); opacity: 0; }
-            10% { opacity: 0.7; }
-            100% { transform: translate(calc(100vw + 200px), -100px); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translate(calc(100vw + 150px), -80px); opacity: 0; }
         }
 
-        /* --- PORTADA / SOBRE INTERACTIVO --- */
+        /* --- SOBRE DIGITAL DE PORTADA --- */
         #portada-sobre {
             position: fixed;
             top: 0;
@@ -119,190 +119,157 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
         }
 
         .sobre-contenedor {
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 45px 30px;
+            background: white;
+            padding: 40px 25px;
             border-radius: 24px;
-            box-shadow: 0 20px 45px rgba(91, 124, 153, 0.12);
+            box-shadow: 0 15px 40px rgba(91, 124, 153, 0.12);
             border: 2px dashed var(--color-azul-suave);
-            max-width: 360px;
-            width: 90%;
-            backdrop-filter: blur(5px);
+            max-width: 340px;
+            width: 85%;
         }
 
         .sobre-contenedor h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.8rem;
+            font-size: 3.5rem;
             color: var(--color-azul-principal);
-            margin: 10px 0;
+            margin: 15px 0;
             line-height: 1.1;
         }
 
         .sobre-contenedor p {
-            font-size: 0.9rem;
-            color: var(--texto-oscuro);
+            font-size: 0.85rem;
             letter-spacing: 2px;
             text-transform: uppercase;
+            color: #777;
         }
 
         .btn-abrir {
             background-color: var(--color-azul-principal);
             color: white;
             border: none;
-            padding: 14px 35px;
+            padding: 14px 30px;
             font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            letter-spacing: 1px;
-            box-shadow: 0 6px 20px rgba(91, 124, 153, 0.3);
             margin-top: 20px;
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(91, 124, 153, 0.3);
+            transition: 0.3s;
         }
 
-        .btn-abrir:hover {
-            background-color: var(--color-azul-suave);
-            transform: translateY(-2px);
-        }
+        .btn-abrir:hover { background-color: var(--color-azul-suave); }
 
-        /* --- BOTÓN DE MÚSICA FLOTANTE --- */
+        /* --- BOTÓN DE CONTROL DE MÚSICA FLOTANTE --- */
         .music-control {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             z-index: 100;
             background: white;
             border: 1px solid var(--color-azul-suave);
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: none;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             color: var(--color-azul-principal);
             font-size: 1.2rem;
-            transition: transform 0.2s;
         }
 
-        /* --- CONTENIDO PRINCIPAL --- */
+        /* --- CUERPO PRINCIPAL (TARJETAS) --- */
         .main-content {
             position: relative;
             z-index: 2;
-            max-width: 460px;
+            max-width: 440px;
             margin: 0 auto;
-            padding: 90px 20px 50px 20px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
-            gap: 35px;
+            gap: 30px;
         }
 
         .card {
             background: var(--color-crema-tarjeta);
-            border-radius: 24px;
-            padding: 35px 25px;
+            border-radius: 22px;
+            padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(91, 124, 153, 0.05);
+            box-shadow: 0 10px 30px rgba(91, 124, 153, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(4px);
         }
 
         .card-title {
             font-family: 'Great Vibes', cursive;
             font-size: 3rem;
             color: var(--color-azul-principal);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-
-        /* Secciones de Fotos Reservadas de forma limpia */
-        .placeholder-foto {
-            width: 150px;
-            height: 150px;
-            background: rgba(245, 247, 250, 0.8);
-            border: 2px dashed var(--color-azul-suave);
-            border-radius: 50%;
-            margin: 20px auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: var(--color-azul-suave);
-            font-size: 0.8rem;
-            gap: 10px;
-        }
-        .placeholder-foto i { font-size: 2rem; }
 
         /* Cuenta regresiva */
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .countdown-item {
-            background: rgba(91, 124, 153, 0.08);
-            padding: 12px 8px;
-            border-radius: 14px;
-            min-width: 70px;
+            background: rgba(91, 124, 153, 0.06);
+            padding: 10px;
+            border-radius: 12px;
+            min-width: 65px;
         }
 
         .countdown-num {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: var(--color-azul-principal);
         }
 
-        .countdown-lbl {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: #666;
-            letter-spacing: 0.5px;
-        }
+        .countdown-lbl { font-size: 0.6rem; text-transform: uppercase; color: #666; }
 
-        /* Botones de acción */
         .btn-accion {
             display: inline-block;
             background: var(--color-azul-principal);
             color: white;
             text-decoration: none;
-            padding: 14px 28px;
+            padding: 12px 25px;
             border-radius: 50px;
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 5px 15px rgba(91, 124, 153, 0.25);
-            transition: background 0.3s;
+            box-shadow: 0 4px 12px rgba(91, 124, 153, 0.2);
         }
-        .btn-accion:hover { background: var(--color-azul-suave); }
     </style>
 </head>
 <body>
 
-    <!-- BOTÓN DE MÚSICA -->
-    <button class="music-control" id="musicBtn" onclick="toggleMúsica()">
+    <!-- CONTROLADOR FLOTANTE DE MÚSICA -->
+    <button class="music-control" id="musicBtn" onclick="toggleMusica()">
         <i id="musicIcon" class="fas fa-music"></i>
     </button>
 
-    <!-- AUDIO CONFIGURADO PARA TU ARCHIVO EN HAIBU -->
+    <!-- ARCHIVO DE AUDIO QUE SUBISTE (Apunta al nombre genérico o puedes renombrarlo) -->
     <audio id="bgMusic" loop>
         <source src="cancion.mp3" type="audio/mp3">
     </audio>
 
-    <!-- FONDO FLOTANTE INTERACTIVO -->
+    <!-- CAPA DE DECORACIONES DE FONDO -->
     <div class="background-decorations" id="decoraciones">
-        <div class="asset-flotante asset-oso-globo" data-speed="2"></div>
-        <div class="asset-flotante asset-cesta-globos" data-speed="-1.5"></div>
-        <div class="asset-flotante asset-racimo-azul" data-speed="1"></div>
+        <div class="asset-flotante asset-oso-globo" data-speed="1.5"></div>
+        <div class="asset-flotante asset-cesta-globos" data-speed="-1"></div>
+        <div class="asset-flotante asset-racimo-azul" data-speed="0.8"></div>
     </div>
 
-    <!-- SOBRE DIGITAL DE BIENVENIDA -->
+    <!-- SOBRE DIGITAL -->
     <div id="portada-sobre">
         <div class="sobre-contenedor">
             <p>Te invitamos al</p>
@@ -312,14 +279,11 @@
         </div>
     </div>
 
-    <!-- PÁGINA PRINCIPAL -->
+    <!-- CONTENIDO DE LA INVITACIÓN -->
     <div class="main-content">
-        
-        <!-- BIENVENIDA & CONTADOR -->
         <div class="card">
             <h2 class="card-title">Eithan Samuel</h2>
-            <p>Falta muy poco para que nuestro pequeño llegue al mundo. ¡Acompáñanos a contar los días!</p>
-            
+            <p>Falta muy poco para conocer a nuestro hermoso bebé. ¡Acompáñanos en este día tan especial!</p>
             <div class="countdown-container">
                 <div class="countdown-item"><div class="countdown-num" id="dias">00</div><div class="countdown-lbl">Días</div></div>
                 <div class="countdown-item"><div class="countdown-num" id="horas">00</div><div class="countdown-lbl">Horas</div></div>
@@ -327,39 +291,18 @@
             </div>
         </div>
 
-        <!-- ESPACIO PARA FOTOS FUTURAS -->
-        <div class="card">
-            <h2 class="card-title">Los Papás</h2>
-            <div class="placeholder-foto">
-                <i class="fas fa-camera-retro"></i>
-                <span>Próximamente foto</span>
-            </div>
-            <p style="font-weight: 600; letter-spacing: 0.5px;">Mamá & Papá</p>
-        </div>
-
-        <!-- LOGÍSTICA -->
         <div class="card">
             <h2 class="card-title">Dónde y Cuándo</h2>
-            <p style="margin-bottom: 10px; font-size: 1.05rem;"><i class="far fa-calendar-check" style="color: var(--color-azul-principal); margin-right: 6px;"></i> <strong>Sábado, 11 de Julio de 2026</strong></p>
-            <p style="margin-bottom: 20px; color: #555;"><i class="far fa-clock"></i> 4:00 PM</p>
-            <p style="font-size: 0.95rem; line-height: 1.5;"><i class="fas fa-map-marked-alt" style="color: var(--color-azul-principal);"></i> Salón de Eventos "Mis Dulces Sueños", Maracaibo</p>
-            <a href="https://maps.google.com" target="_blank" class="btn-accion">Ver Mapa Completo</a>
+            <p style="margin-bottom: 8px;"><strong>Sábado, 11 de Julio de 2026</strong></p>
+            <p style="margin-bottom: 15px; color: #666;"><i class="far fa-clock"></i> 4:00 PM</p>
+            <p style="font-size: 0.9rem;"><i class="fas fa-map-marker-alt" style="color: var(--color-azul-principal);"></i> Salón de Eventos "Mis Dulces Sueños", Maracaibo</p>
+            <a href="https://maps.google.com" target="_blank" class="btn-accion">Ver Ubicación</a>
         </div>
 
-        <!-- DULCE ESPERA -->
         <div class="card">
-            <h2 class="card-title">Mi Dulce Espera</h2>
-            <div class="placeholder-foto" style="border-radius: 18px; width: 200px; height: 130px;">
-                <i class="fas fa-baby-carriage"></i>
-                <span>Espacio para Ecografía</span>
-            </div>
-        </div>
-
-        <!-- CONFIRMACIÓN -->
-        <div class="card">
-            <h2 class="card-title">Confirmar Asistencia</h2>
-            <p>Agradecemos confirmar tu asistencia antes del 1 de Julio para esperarte con todo listo.</p>
-            <a href="https://wa.me/584240000000" target="_blank" class="btn-accion" style="background-color: #25d366; box-shadow: 0 5px 15px rgba(37,211,102,0.3);"><i class="fab fa-whatsapp" style="font-size: 1.1rem; margin-right: 5px;"></i> Confirmar por WhatsApp</a>
+            <h2 class="card-title">Confirmación</h2>
+            <p style="margin-bottom: 10px;">Por favor, confirma tu asistencia antes del 1 de Julio.</p>
+            <a href="https://wa.me/584240000000" target="_blank" class="btn-accion" style="background: #25d366; box-shadow: 0 4px 12px rgba(37,211,102,0.2);"><i class="fab fa-whatsapp"></i> Confirmar por WhatsApp</a>
         </div>
     </div>
 
@@ -374,17 +317,12 @@
             sobre.style.opacity = '0';
             musicBtn.style.display = 'flex';
 
-            // Arranca el audio al interactuar con el botón de apertura
-            audio.play().catch(function(e) {
-                console.log("Reproducción bloqueada por el navegador hasta otra acción.");
-            });
+            audio.play().catch(function(e) { console.log("Interacción requerida para audio."); });
             
-            setTimeout(function() {
-                sobre.style.display = 'none';
-            }, 900);
+            setTimeout(function() { sobre.style.display = 'none'; }, 800);
         }
 
-        function toggleMúsica() {
+        function toggleMusica() {
             if (audio.paused) {
                 audio.play();
                 musicIcon.className = 'fas fa-music';
@@ -394,29 +332,23 @@
             }
         }
 
-        // PARALLAX SUTIL AL DESLIZAR (Scroll)
+        // Efecto Parallax suave al hacer scroll
         window.addEventListener('scroll', function() {
             var scrollPos = window.pageYOffset;
             var items = document.querySelectorAll('.asset-flotante');
-            
             items.forEach(function(item) {
                 var speed = parseFloat(item.getAttribute('data-speed'));
-                item.style.marginTop = (scrollPos * speed * 0.15) + 'px';
+                item.style.transform = 'translateY(' + (scrollPos * speed * 0.15) + 'px)';
             });
         });
 
-        // RECONSTRUCCIÓN DE LA CUENTA REGRESIVA
+        // Cuenta regresiva exacta
         function cuentaRegresiva() {
             var fechaEvento = new Date('July 11, 2026 16:00:00').getTime();
             var ahora = new Date().getTime();
             var diferencia = fechaEvento - ahora;
 
-            if (diferencia <= 0) {
-                document.getElementById('dias').innerText = "00";
-                document.getElementById('horas').innerText = "00";
-                document.getElementById('minutos').innerText = "00";
-                return;
-            }
+            if (diferencia <= 0) return;
 
             var d = Math.floor(diferencia / (1000 * 60 * 60 * 24));
             var h = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -430,4 +362,4 @@
         cuentaRegresiva();
     </script>
 </body>
-</html>
+                                                </html>
